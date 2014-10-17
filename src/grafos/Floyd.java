@@ -18,6 +18,8 @@ public class Floyd {
     private final int size = 10;
     // Crear matriz de incidencia
     private long [][] adyacencia = new long[size][size];
+    // Crear matriz de conexiones
+    String[][] conex = new String[size][size];
     // Random
     private Random rnd = new Random();
     
@@ -62,11 +64,10 @@ public class Floyd {
         }
     }
     
-    public String find()
+    public void find()
     {        
         String eR = "";
-        long M[][] = adyacencia;       
-        String[][] conex = new String[size][size];
+        long M[][] = adyacencia;        
         String[][] o_conex = new String[size][size];
         
         // Limpiar matrices
@@ -98,10 +99,13 @@ public class Floyd {
                             conex[i][j] = findEnlaces(i, k, o_conex, eR)+(k+1);
                         }
                     M[i][j] = (long) calc;
-                }
-        
+                }     
+    }
+    
+    public String caminos()
+    {
         // Concatenar resultado
-        String res = "\n";
+        String res = "La distancia mas corta entre nodos es: \n";
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)            
                 if (j != i)
@@ -113,58 +117,23 @@ public class Floyd {
         return res;
     }
     
-    public String find(int inicio, int fin)
-    {        
-        String eR = "";
-        long M[][] = adyacencia;       
-        String[][] conex = new String[size][size];
-        String[][] o_conex = new String[size][size];
-        
-        // Limpiar matrices
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)      
-            {
-                conex[i][j] = "";
-                o_conex[i][j] = "";
-            }
-        
-        // Verificar el triangulo del tipo
-        //           B 
-        // A                     C
-        // Si la distancia de A-B + B-C es mejor que A-C        
-        for (int k = 0; k < size; k++)
-            for (int i = 0; i < size; i++)
-                for (int j = 0; j < size;j++)
-                {
-                    float a = M[i][j];
-                    float b = M[i][k];
-                    float c = M[k][j];
-                    float d = b+c;
-                    float calc = Math.min(a, d);
-                    if (a != d)
-                        if (d == calc)
-                        {
-                            eR = "";
-                            o_conex[i][j] = k+"";
-                            conex[i][j] = findEnlaces(i, k, o_conex, eR)+(k+1);
-                        }
-                    M[i][j] = (long) calc;
-                }
-        
+    public String caminoIF(int inicio, int fin)
+    {
         // Concatenar resultado
-        String res = "\n";        
+        String res = "";
         if (inicio == fin)
-            res = "Ha seleccionado el mismo nodo como inicio y fin";
+            res += "Ha seleccionado el mismo nodo como inicio y fin \n";
         else
         {
+            res += "La distancia mas corta entre " + Integer.toString(inicio) + " y " + Integer.toString(fin) + " es: \n";
             if (conex[inicio-1][fin-1].equals("") == true)
                 res += "[ " + inicio + " - " + fin + " ] = [ " + inicio + " , " + fin + " ] \n";
             else
                 res += "[ " + inicio + " - " + fin + " ] = [ " + inicio + " , " + conex[inicio-1][fin-1] + " , " + fin + " ] \n"; 
         }
         
-        return res;
-    }
+        return res;        
+    }   
     
     public String toString()
     {
