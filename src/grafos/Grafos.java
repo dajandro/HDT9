@@ -6,8 +6,6 @@
 
 package grafos;
 
-import java.util.Random;
-
 /**
  *
  * @author Daniel Orozco <daniel.orozco>
@@ -26,6 +24,11 @@ public class Grafos {
         // Mostrar conexión entre nodos
         System.out.println(floyd.toString());
         
+        // Mostar camino mas corto entre nodos
+        //System.out.println("La distancia mas corta entre nodos es: " + floyd.find();       
+        
+        // Encontrar ruta mas corta entre dos nodos
+        System.out.println("La distancia mas corta entre 2 y 4 es: " + floyd.find(2,4));
     }
     
 }
